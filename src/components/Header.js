@@ -10,7 +10,7 @@ import React from 'react';
 const Header = () => {
   return (
     <>
-      <Typography variant="h3" sx={{ m: 1 }}>
+      <Typography variant="h3" align = "center" sx={{ m: 1 }}>
         Call a Friend
       </Typography>
       <Box

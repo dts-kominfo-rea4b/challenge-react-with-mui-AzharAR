@@ -1,47 +1,39 @@
-import { Contacts } from '@mui/icons-material';
-import { Grid, List } from '@mui/material';
-import { Container } from '@mui/system';
-import './App.css';
-import Contact from './components/Contact';
-import ContactForm from './components/ContactForm';
-import Header from './components/Header';
-import { useState } from 'react';
-import contactsJSON from './data/contacts.json'
+
+import Contact from "./components/Contact";
+import { useState } from "react";
 
 // Uncomment untuk memuat daftar kontak
-// import contactsJSON from './data/contacts.json';
+import contactsJSON from "./data/contacts.json";
+import Header from "./components/Header";
+import { Grid, List } from "@mui/material";
+import ContactForm from "./components/ContactForm";
 const App = () => {
+  const [contacts, setContacts] = useState(contactsJSON);
   // Masukkan Header dan lakukan map untuk Contact ke dalam div App
   // untuk membuat daftar kontak bisa menggunakan MUI list
   // https://mui.com/material-ui/react-list/#folder-list
 
   // Masukkan contacts yang sudah didapat dalam JSON sebagai initial state
   // Buatlah handler untuk menambahkan kontak baru yang akan dikirim ke ContactForm
-
-  const [contacts, setContacts] = useState(contactsJSON);
-
-  // Buatlah handler untuk menambahkan kontak baru yang akan dikirim ke ContactForm
-  const onSubmitNewContactHandler = (newContact) => {
-    setContacts([...contacts, newContact]);
+  const tambahKontak = (data) => {
+    setContacts([...contacts, data]);
   };
 
   return (
     <div className="App">
-
       <Header />
-      <Container>
-        <Grid>
-          <ContactForm onSubmitNewContact={onSubmitNewContactHandler} />
+      <Grid container spacing={2} sx={{ marginTop: "2rem" }}>
+        <Grid item xs={5}>
+          <ContactForm addContact={tambahKontak} />
         </Grid>
-        <Grid>
-          <List sx={{ backgroundColor: "#b9f6ca", borderRadius: "4px" }}>
-              {contacts.map((contact, index) => {
-                return <Contact key={index} data={contact} />;
-              })}
+        <Grid item xs={7}>
+          <List sx={{ margin: "0 5rem", background: "#dbf6f0" }}>
+            {contacts.map((el) => {
+              return <Contact data={el} />;
+            })}
           </List>
         </Grid>
-      </Container>
-
+      </Grid>
     </div>
   );
 };
