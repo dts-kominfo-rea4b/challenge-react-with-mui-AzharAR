@@ -10,7 +10,7 @@ const Contact = ({ data }) => {
     const {name, phone, email, photo} = data;
     return (
         <>
-        <ListItem>
+       <ListItem sx={{ display: "flex", gap: 4 }}>
             <ListItemAvatar>
                 <Avatar alt={name} src={photo} sx={{width:50, height:50}} />
             </ListItemAvatar>
