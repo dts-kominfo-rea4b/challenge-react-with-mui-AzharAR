@@ -1,38 +1,48 @@
 // Terima props lalu tampilkan dalam Contact component
 // Contact component dapat berupa MUI ListItem
 // https://mui.com/material-ui/react-list/#folder-list
-import { Avatar, ListItem, ListItemAvatar, ListItemText } from "@mui/material";
+import { List, ListItem, ListItemAvatar, ListItemText, Avatar, Card } from '@mui/material';
 import React from "react";
+import { useEffect, useState } from 'react';
 
 // Kalian bisa membuat CSS sendiri di src/components/Contact.css
 // atau langsung tambahkan dengan sx={{}}
 
 const Contact = ({ data }) => {
   // Contact berisi foto, nama, telepon, dan email
-  return (
-    <>
-      <ListItem>
-        <ListItemAvatar>
-          <Avatar
-            sx={{ width: "50px", height: "50px",}}
-          >
-            <img src={data.photo} width={65} />
-          </Avatar>
-        </ListItemAvatar>
+  const [contacts, setContacts] = useState([]);
 
-        <ListItemText primary={data.name} secondary={
-            <div>
-              <div>{data.phone}</div>
-              <div>{data.email}</div>
-            </div>
-          }
-        ></ListItemText>
+    useEffect(() => {
+        setContacts((data.length > 0)?data : [data]);        
+    }, [data]);    
 
+    return (
+    <div>
+        <Card sx={{ width: 350, height: 400 }}>
         
-      </ListItem>
-     
-    </>
-  );
+            <List style={{maxHeight: '100%', overflow: 'auto'}}>
+                
+                { contacts.map((contact) => (
+                    <ListItem key={contact.name}>
+                        <ListItemAvatar>
+                            <Avatar                                
+                                alt={contact.name}
+                                src={contact.photo} 
+                            />
+                        </ListItemAvatar>
+                        <ListItemText primary={contact.name} secondary={
+                            <span>
+                                {contact.phone}<br/>
+                                {contact.email}
+                            </span>
+                        }/>
+                    </ListItem>
+                    ))}
+            </List>
+
+       </Card>
+    </div>
+    )
 };
 
 export default Contact;
